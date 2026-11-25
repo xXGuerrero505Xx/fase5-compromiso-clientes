@@ -1,2 +1,56 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+"""Fase 5, Problema 1: clasificación del compromiso de clientes.
+
+UNAD | Fundamentos de Programación | Grupo 213022_210
+Estudiante: Keiner Esteban Guerrero Cruz
+"""
+
+
+def clasificar_compromiso(duracion, clics):
+    """Retorna Alto, Bajo o Medio según la duración y los clics de la sesión."""
+    if duracion > 180 and clics > 8:
+        return "Alto"
+    elif duracion < 60 or clics < 3:
+        return "Bajo"
+    else:
+        return "Medio"
+
+
+def generar_informe(sesiones):
+    """Recorre la matriz y presenta la clasificación de cada cliente."""
+    print("=" * 63)
+    print("INFORME DE COMPROMISO DE CLIENTES")
+    print("=" * 63)
+    print(f"{'Cliente':<12}{'Duración (s)':<17}{'Clics':<10}{'Compromiso':<12}")
+    print("-" * 63)
+
+    for sesion in sesiones:
+        cliente, duracion, clics = sesion
+        compromiso = clasificar_compromiso(duracion, clics)
+        print(f"{cliente:<12}{duracion:<17}{clics:<10}{compromiso:<12}")
+
+    print("-" * 63)
+    print(f"Total de sesiones analizadas: {len(sesiones)}")
+
+
+def main():
+    # Cada fila: [ID del cliente, duración en segundos, número de clics]
+    sesiones = [
+        ["C001", 240, 12],  # Alto: ambas condiciones se cumplen.
+        ["C002", 45, 6],    # Bajo: duración menor a 60 segundos.
+        ["C003", 120, 5],   # Medio: no cumple Alto ni Bajo.
+        ["C004", 200, 8],   # Medio: exactamente 8 clics no es más de 8.
+        ["C005", 300, 2],   # Bajo: menos de 3 clics.
+        ["C006", 180, 9],   # Medio: exactamente 180 no es más de 180.
+        ["C007", 181, 9],   # Alto: supera ambos límites.
+        ["C008", 60, 3],    # Medio: límites inferiores exactos.
+        ["C009", 59, 3],    # Bajo: duración de 59 segundos.
+        ["C010", 61, 2],    # Bajo: solo 2 clics.
+    ]
+
+    generar_informe(sesiones)
+
+
+if __name__ == "__main__":
+    main()
